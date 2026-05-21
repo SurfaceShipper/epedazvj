@@ -715,7 +715,7 @@ function randPointInTank() {
   const margin = FISH_MARGIN + 0.05;
   return new THREE.Vector3(
     (Math.random() - 0.5) * (TANK_W - 2 * margin),
-    TANK_BOTTOM_Y + 0.6 + Math.random() * (WATER_TOP_Y - (TANK_BOTTOM_Y + 0.9)),
+    TANK_BOTTOM_Y + 0.7 + Math.random() * (WATER_TOP_Y - (TANK_BOTTOM_Y + 1.4)),
     (Math.random() - 0.5) * (TANK_D - 2 * margin)
   );
 }
@@ -762,8 +762,8 @@ class Fish {
     if (pos.x < -HALF.x + m) desired.x += 0.018;
     if (pos.z >  HALF.z - m) desired.z -= 0.018;
     if (pos.z < -HALF.z + m) desired.z += 0.018;
-    if (pos.y > WATER_TOP_Y - 0.45) desired.y -= 0.018;
-    if (pos.y < TANK_BOTTOM_Y + 0.55) desired.y += 0.018;
+    if (pos.y > WATER_TOP_Y - 0.75) desired.y -= 0.022;
+    if (pos.y < TANK_BOTTOM_Y + 0.65) desired.y += 0.020;
 
     this.velocity.lerp(desired, 0.045);
 
@@ -773,7 +773,7 @@ class Fish {
     // hard clamp position
     pos.x = THREE.MathUtils.clamp(pos.x, -HALF.x + FISH_MARGIN, HALF.x - FISH_MARGIN);
     pos.z = THREE.MathUtils.clamp(pos.z, -HALF.z + FISH_MARGIN, HALF.z - FISH_MARGIN);
-    pos.y = THREE.MathUtils.clamp(pos.y, TANK_BOTTOM_Y + 0.35, WATER_TOP_Y - 0.25);
+    pos.y = THREE.MathUtils.clamp(pos.y, TANK_BOTTOM_Y + 0.5, WATER_TOP_Y - 0.55);
 
     // smooth facing via quaternion slerp
     if (this.velocity.lengthSq() > 1e-7) {
