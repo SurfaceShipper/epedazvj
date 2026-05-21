@@ -45,8 +45,8 @@
 <script type="importmap">
 {
   "imports": {
-    "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
-    "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+    "three": "https://unpkg.com/three@0.184.0/build/three.module.js",
+    "three/addons/": "https://unpkg.com/three@0.184.0/examples/jsm/"
   }
 }
 </script>
@@ -72,7 +72,7 @@ const renderer = new THREE.WebGLRenderer({ antialias: true });
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.shadowMap.enabled = true;
-renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+renderer.shadowMap.type = THREE.PCFShadowMap;
 renderer.toneMapping = THREE.ACESFilmicToneMapping;
 renderer.toneMappingExposure = 1.2;
 renderer.outputColorSpace = THREE.SRGBColorSpace;
@@ -826,10 +826,11 @@ window.addEventListener('resize', () => {
 /* =========================================================================
  * Animation loop
  * ========================================================================= */
-const clock = new THREE.Clock();
-function animate() {
-  const dt = Math.min(clock.getDelta(), 0.05);
-  const t = clock.getElapsedTime();
+const timer = new THREE.Timer();
+function animate(timestamp) {
+  timer.update(timestamp);
+  const dt = Math.min(timer.getDelta(), 0.05);
+  const t = timer.getElapsed();
 
   fish.forEach(f => f.update(dt, t));
   bubbleStreams.forEach(s => s.update(dt, t));
@@ -843,7 +844,7 @@ function animate() {
   renderer.render(scene, camera);
   requestAnimationFrame(animate);
 }
-animate();
+requestAnimationFrame(animate);
 </script>
 </body>
 </html>
